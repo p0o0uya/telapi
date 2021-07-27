@@ -5,16 +5,16 @@ import requests
 ######################### CLASS #########################
 class telapi():
 
-    TOKEN = '1259359519:AAGK-O0KTOXIUJ9MRc5_YZggPUldso0kfAg'
-    URL   = 'https://api.telegram.org/bot{}/'.format(TOKEN)     # Telegram bot API url + TOKEN
+    URL   = 'https://api.telegram.org/bot{}/'     # Telegram bot API url + TOKEN
 
-    def __init__(self):
+    def __init__(self, TOKEN):
         # print('Initializing the class!')
+        self.URL.format(TOKEN)
         gtm = self.getme()
         if gtm:
-            print('connection successfull to the bot')
+            print('connection successfull to the API')
         else:
-            raise Exception('Failed to test bot connectivity!')
+            raise Exception('Failed to test API connectivity!')
 
     def getme(self):
         try:
@@ -30,8 +30,8 @@ class telapi():
             resp = requests.get(self.URL + 'getUpdates', {'offset': uid + 1})      # Giving the offset Telegram forgets all those messages before this update id
         else:
             resp = requests.get(self.URL + 'getUpdates')          # reading the url to get the current updates
-        upds  = resp.json()
-        newuid = None                                             # converting the content to JSON
+        upds     = resp.json()
+        newuid   = None                                             # converting the content to JSON
         if upds['result']:
             newuid = upds['result'][0]['update_id']               # Read the update id          
         return upds, newuid
@@ -63,3 +63,8 @@ class telapi():
         resp = requests.post(self.URL + 'sendDocument', files = files, data = data)
         resp = resp.json()
         return resp
+
+if __name__=='__main__':
+    TOKEN = '1259359519:AAGK-O0KTOXIUJ9MRc5_YZggPUldso0kfAg'
+    inst  = telapi(TOKEN)
+    inst.getme()
