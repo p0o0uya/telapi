@@ -59,9 +59,9 @@ class telapi():
         else:
             data  = {'chat_id': chid}
         data['caption'] = caption
-        files = {'document': (pathtodoc, open(pathtodoc, 'rb'))}
-        resp = requests.post(self.URL + 'sendDocument', files = files, data = data)
-        resp = resp.json()
+        files           = {'document': (pathtodoc, open(pathtodoc, 'rb'))}
+        resp            = requests.post(self.URL + 'sendDocument', files = files, data = data)
+        resp            = resp.json()
         return resp
 
 if __name__=='__main__':
