@@ -65,6 +65,6 @@ class telapi():
         return resp
 
 if __name__=='__main__':
-    TOKEN = '1259359519:AAGK-O0KTOXIUJ9MRc5_YZggPUldso0kfAg'
+    TOKEN = 'PUT YOUR API TOKEN HERE'
     inst  = telapi(TOKEN)
     inst.getme()
