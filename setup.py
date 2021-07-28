@@ -11,11 +11,11 @@ setuptools.setup(
     description='A wrapper for telegram bot API',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/p0o0uya/telapi',
+    url='https://github.com/p0o0uya/telegapi',
     project_urls = {
-        "Bug Tracker": "https://github.com/p0o0uya/telapi/issues"
+        "Bug Tracker": "https://github.com/p0o0uya/telegapi/issues"
     },
     license='MIT',
-    packages=['telapi'],
-    install_requires=['requests', 'pandas'],
+    packages=['telegapi'],
+    install_requires=['requests'],
 )
