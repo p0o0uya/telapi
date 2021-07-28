@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='telapi',
+    name='telegapi',
     version='0.0',
     author='Pouya Jamali',
     author_email='pouyajamali@gmail.com',
