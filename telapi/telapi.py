@@ -1,5 +1,5 @@
-import json                                 # importing the JSON library
-import requests
+import json
+from . import reqs
 
 
 ######################### CLASS #########################
@@ -27,8 +27,7 @@ class telapi():
 
     def getme(self):
         try:
-            resp  = requests.get(self.URL + 'getme')            # reading the url
-            resp  = resp.json()                                 # converting the content to JSON                         # 
+            resp  = reqs._get(self.URL + 'getme')                       # 
             return resp
         except Exception as Err:
             print(Err)
@@ -36,10 +35,10 @@ class telapi():
 
     def getupdates(self, uid:int=None):
         if uid:
-            resp = requests.get(self.URL + 'getUpdates', {'offset': uid + 1})      # Giving the offset Telegram forgets all those messages before this update id
+            resp = reqs._get(self.URL + 'getUpdates', {'offset': uid + 1})      # Giving the offset Telegram forgets all those messages before this update id
         else:
-            resp = requests.get(self.URL + 'getUpdates')          # reading the url to get the current updates
-        upds     = resp.json()
+            resp = reqs._get(self.URL + 'getUpdates')                           # reading the url to get the current updates
+        upds     = resp
         newuid   = None                                             # converting the content to JSON
         if upds['result']:
             newuid = upds['result'][0]['update_id']               # Read the update id          
@@ -51,14 +50,12 @@ class telapi():
             data =  {'chat_id': chid, 'text': txt, 'reply_markup': replykey}
         else:
             data = {'chat_id': chid, 'text': txt}
-        resp = requests.post(self.URL + 'sendMessage', data = data)
-        resp = resp.json()
+        resp = reqs._post(self.URL + 'sendMessage', data = data)
         return resp
 
     def delmsg(self, chid, msgid):
         data = {'chat_id': chid, 'message_id': msgid}
-        resp = requests.post(self.URL + 'deleteMessage', data = data)
-        resp = resp.json()
+        resp = reqs._post(self.URL + 'deleteMessage', data = data)
         return resp
     
     def sendoc(self, chid, pathtodoc, caption:str=None, repkey:dict=None):
@@ -69,8 +66,7 @@ class telapi():
             data  = {'chat_id': chid}
         data['caption'] = caption
         files           = {'document': (pathtodoc, open(pathtodoc, 'rb'))}
-        resp            = requests.post(self.URL + 'sendDocument', files = files, data = data)
-        resp            = resp.json()
+        resp            = reqs._post(self.URL + 'sendDocument', files = files, data = data)
         return resp
 
 if __name__=='__main__':
