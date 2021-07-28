@@ -7,8 +7,17 @@ class telapi():
 
     URL   = 'https://api.telegram.org/bot{}/'     # Telegram bot API url + TOKEN
 
-    def __init__(self, TOKEN):
+    def __init__(self, TOKENFILE:str=None):
         # print('Initializing the class!')
+        if TOKENFILE == None:
+            raise Exception("Cannot access api without the token.")
+
+        f = open(TOKENFILE, "r")
+        contents = []
+        if f.mode == 'r':
+            contents = f.read().split('\n')
+
+        TOKEN = contents[0]
         self.URL.format(TOKEN)
         gtm = self.getme()
         if gtm:
@@ -65,6 +74,6 @@ class telapi():
         return resp
 
 if __name__=='__main__':
-    TOKEN = 'PUT YOUR API TOKEN HERE'
-    inst  = telapi(TOKEN)
+    TOKENFILE = "/home/pj/Documents/Github Repos/telapi/tokenfile.txt" # Here you need to path to your token file
+    inst      = telapi(TOKENFILE)
     inst.getme()
